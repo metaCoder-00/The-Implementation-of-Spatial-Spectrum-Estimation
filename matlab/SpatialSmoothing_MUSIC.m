@@ -29,12 +29,12 @@ function [theta, P] = SpatialSmoothing_MUSIC(SNR, snapshots, sensorNum)
     %----------Consider three sources at -10 degree, 0 degree and 10 degree.----------------------%
     %----------Sources at -10 degree and 0 degree is coherent.------------------------------------%
     %----------Each source is generated from a zerom mean Gaussian distribution.------------------%
-    theta_S = [-10; 0; 10];
+    theta_S = [-20; 0; 20];
     sourceNum = length(theta_S);
-    sigma_S = sigma_N * 10^(SNR/20);
+    sigma_S = sigma_N * 10^(SNR/10);
     signalCovMat = [sigma_S, 0.99*sigma_S, 0; 0.99*sigma_S, sigma_S, 0; 0, 0, sigma_S];
     signalAmp = mvnrnd(zeros(sourceNum, 1), signalCovMat, snapshots);
-    signalPhase = exp(-1j*2*pi*f*Ns + randn());
+    signalPhase = exp(-1j*2*pi*f*Ns);
     signalMat = zeros(size(signalAmp));             % Each row is A sample 
     for col = 1: sourceNum
         signalMat(:, col) = signalAmp(:, col) .* signalPhase;
@@ -70,7 +70,7 @@ function [theta, P] = SpatialSmoothing_MUSIC(SNR, snapshots, sensorNum)
     [~, eigenValsIdx] = sort(eigenVals);
     noiseSubspace = eigenVec(:, eigenValsIdx(1: m - sourceNum));
 
-    theta = (-90: 90)';
+    theta = (-90: 0.1: 90)';
     P = zeros(length(theta), 1);
     for idx = 1: length(theta)
         steeringVec = exp(-1j*2*pi*f*(spacing*(0: m - 1)'*sind(theta(idx)))/c);

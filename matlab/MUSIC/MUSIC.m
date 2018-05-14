@@ -19,7 +19,7 @@ N = (sigma_N*randn(M, n) + 0).*exp(-1j*2*pi*f*Ns);
 %----------Consider three uncorrlated sources at -10 degree, 0 degree and 10 degree,----------------------%
 %----------Each source is generated from a zerom mean Gaussian distribution.------------------%
 D = 3;                                                         % The number of sources    
-sigma_S = sigma_N * 10^(SNR/20);
+sigma_S = sigma_N * 10^(SNR/10);
 S = (sigma_S*randn(D, n) + 0).*exp(-1j*2*pi*f*Ns);
 
 theta_S = [-10; 0; 10];

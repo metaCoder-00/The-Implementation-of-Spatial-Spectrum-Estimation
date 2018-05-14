@@ -1,8 +1,8 @@
-theta_S = [-10; 0; 10];
+theta_S = [-20; 0; 20];
 snapshots = 200;
 sensorNum = 8;
 
-N = 500;
+N = 1000;
 
 SNRVals = (-5: 5: 25)';
 SSm_MUSIC_RMES = zeros(length(SNRVals), 1);
@@ -54,7 +54,7 @@ figure(1)
 plot(SNRVals, SSm_MUSIC_RMES, 'o-', SNRVals, l1_SVD_RMES, '*--')
 legend('Spatial Smoothing MUSIC', 'l1-SVD');
 xlabel('SNR(dB)')
-ylabel('RMES')
+ylabel('RMSE')
 title(strcat('The number of test: ', num2str(N)))
 
 

@@ -1,10 +1,10 @@
-theta_S = [-10; 0; 10];
+theta_S = [-20; 0; 20];
 SNR = 25;
 snapshots = 200;
 
-N = 500;
+N = 1000;
 
-sensorNumVals = (6: 2: 32)';
+sensorNumVals = (6: 4: 34)';
 SSm_MUSIC_RMES = zeros(length(sensorNumVals), 1);
 l1_SVD_RMES = zeros(length(sensorNumVals), 1);
 for idx = 1: length(sensorNumVals)
@@ -53,5 +53,5 @@ figure(3)
 plot(sensorNumVals, SSm_MUSIC_RMES, 'o-', sensorNumVals, l1_SVD_RMES, '*--')
 legend('Spatial Smoothing MUSIC', 'l1-SVD');
 xlabel('The number of sensor')
-ylabel('RMES')
+ylabel('RMSE')
 title(strcat('The number of test: ', num2str(N)))

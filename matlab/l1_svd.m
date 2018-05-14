@@ -29,12 +29,12 @@ function [theta, S_sv_hat] = l1_svd(SNR, snapshots, sensorNum)
     %----------Consider three sources at -10 degree, 0 degree and 10 degree.----------------------%
     %----------Sources at -10 degree and 0 degree is coherent.------------------------------------%
     %----------Each source is generated from a zerom mean Gaussian distribution.------------------%
-    theta_S = [-10; 0; 10];
+    theta_S = [-20; 0; 20];
     sourceNum = length(theta_S);
-    sigma_S = sigma_N * 10^(SNR/20);
+    sigma_S = sigma_N * 10^(SNR/10);
     signalCovMat = [sigma_S, 0.99*sigma_S, 0; 0.99*sigma_S, sigma_S, 0; 0, 0, sigma_S];
     signalAmp = mvnrnd(zeros(sourceNum, 1), signalCovMat, snapshots);
-    signalPhase = exp(-1j*2*pi*f*Ns + randn());
+    signalPhase = exp(-1j*2*pi*f*Ns);
     signalMat = zeros(size(signalAmp));             % Each row is A sample 
     for col = 1: sourceNum
         signalMat(:, col) = signalAmp(:, col) .* signalPhase;
@@ -50,14 +50,14 @@ function [theta, S_sv_hat] = l1_svd(SNR, snapshots, sensorNum)
     [~, ~, rightVec] = svd(arrayOut);
     dimReduceMat = [eye(sourceNum), zeros(sourceNum, snapshots - sourceNum)]';
     arrayOut_DimReduce = arrayOut * rightVec * dimReduceMat;
-    theta = (-90: 90)';                % angle scan range
+    theta = (-90: 0.1: 90)';                % angle scan range
     manifoldMat_hat = zeros(sensorNum, length(theta));
     for col = 1: length(theta)
         manifoldMat_hat(:, col) = exp(-1j*2*pi*f*((spacingK*sind(theta(col)))/c));
     end
 
     %----------SOC programming-----------------------%
-    regParam = 1.4;
+    regParam = 1.42;
     sumVec = ones(length(theta), 1);
     cvx_begin
         variables p q r(length(theta));
