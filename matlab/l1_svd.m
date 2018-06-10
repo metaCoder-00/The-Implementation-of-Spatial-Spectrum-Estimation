@@ -29,7 +29,7 @@ function [theta, S_sv_hat] = l1_svd(SNR, snapshots, sensorNum)
     %----------Consider three sources at -10 degree, 0 degree and 10 degree.----------------------%
     %----------Sources at -10 degree and 0 degree is coherent.------------------------------------%
     %----------Each source is generated from a zerom mean Gaussian distribution.------------------%
-    theta_S = [-20; 0; 20];
+    theta_S = [-25; 0; 25];
     sourceNum = length(theta_S);
     sigma_S = sigma_N * 10^(SNR/10);
     signalCovMat = [sigma_S, 0.99*sigma_S, 0; 0.99*sigma_S, sigma_S, 0; 0, 0, sigma_S];
